@@ -1,6 +1,8 @@
 package com.neoteric.javademo.onlineshopping;
 
-public abstract class Product {  // common structure, reusability, enforces child class to implement
+public abstract class Product { // Base class for all products
+
+    // Shared Attributes
     protected String name;
     protected double price;
 
@@ -9,8 +11,10 @@ public abstract class Product {  // common structure, reusability, enforces chil
         this.price = price;
     }
 
-    public abstract void displayDetails(); // Must Implemented by sub classes
+    public abstract void displayDetails(); // Abstract Method //
+                                          //  Must Implemented by sub classes
 
+    // Getter method to retrive the product price
     public double getPrice(){
         return price;
     }

@@ -5,12 +5,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+// Entry Point of the application
 public class OnlineShoppingMain {
 
     public static void main(String[] args) {
 
+
+        // User has to input the values
         Scanner scanner = new Scanner(System.in);
 
+        // initializes a list to hold the products
         List<Product> cart = new ArrayList<>();
 
         // Adding products to cart
@@ -18,6 +22,7 @@ public class OnlineShoppingMain {
         cart.add(new Clothing("USPA T-Shirt", 2500, "L"));
         cart.add(new HomeDecor("Sofa", 36500, "Wood"));
 
+        // Dispaly each product details and total amount
         double total = 0.0;
         System.out.println("---Your Shopping Cart---");
 
@@ -26,6 +31,7 @@ public class OnlineShoppingMain {
             total += item.getPrice();
         }
 
+        // Prints total amount before discount
         System.out.println("Total Amount Before Discount: ₹" + total);
 
 
@@ -33,6 +39,7 @@ public class OnlineShoppingMain {
         Discount discount = new PurchaseDiscount();
         double finalAmount = discount.apply(total);
 
+        // Final amount after discount
         if (finalAmount < total){
             System.out.println("Discount Applied: Final Amount; ₹" + finalAmount );
         }else {
