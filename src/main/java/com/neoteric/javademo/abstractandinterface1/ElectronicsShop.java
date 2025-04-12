@@ -21,4 +21,3 @@ public class ElectronicsShop extends ShoppingMall{
         System.out.println("\n Select Payment");
     }
 }
-x
