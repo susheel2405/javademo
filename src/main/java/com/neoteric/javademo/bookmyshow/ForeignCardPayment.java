@@ -1,23 +1,28 @@
 package com.neoteric.javademo.bookmyshow;
 
-public class ForeignCardPayment extends PaymentMethod{
+public class ForeignCardPayment implements PaymentMethod {
 
+    private static final double CONVERSION_RATE = 0.012; // INR to USD
+    private static final double FOREIGN_FEE = 0.03; // 3%
 
-    private static double USD_CONVERSION_RATE = 0.012;
+    @Override
+    public double applyCharges(double amount, String orderID, String merchantID) {
+        System.out.println("Foreign Credit Card Payment Applied.");
+        return amount * FOREIGN_FEE;
+    }
+
+    public double convertUSD(double inrAmount) {
+        return inrAmount * CONVERSION_RATE;
+    }
 
 
     @Override
-    public double applyCharges(double amount) {
-        return amount * 0.03;
+    public void refund(String orderId, double amount, String merchantID) {
+        System.out.println("Refund of ₹" + amount + " initiated for Order ID: " + orderId + " Initiated from Merchant ID: " + merchantID);
     }
 
     @Override
     public void chooseBank() {
-
-    }
-
-    public double convertUSD(double amountINR){
-        return amountINR * USD_CONVERSION_RATE;
-
+        System.out.println("Foreign Credit Card: No bank selection needed.");
     }
 }

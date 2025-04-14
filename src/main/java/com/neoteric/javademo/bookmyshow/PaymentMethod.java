@@ -1,7 +1,7 @@
 package com.neoteric.javademo.bookmyshow;
 
-public abstract class PaymentMethod {
-
-    public abstract double applyCharges(double amount);
-    public abstract void chooseBank();
+public interface PaymentMethod {
+    double applyCharges(double amount, String orderID, String merchantID);
+    void chooseBank();
+    void refund(String orderId, double amount, String merchantID);
 }

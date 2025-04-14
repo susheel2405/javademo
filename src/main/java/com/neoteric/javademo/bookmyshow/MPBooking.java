@@ -4,6 +4,8 @@ import java.util.Map;
 
 public class MPBooking extends TicketBooking{
 
+
+    // calculating the tax
     public MPBooking(double basePrice){
         super(basePrice);
     }

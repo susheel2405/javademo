@@ -2,6 +2,8 @@ package com.neoteric.javademo.bookmyshow;
 
 public class APBooking extends TicketBooking{
 
+
+    // calculating the tax
     public APBooking(double basePrice){
         super(basePrice);
     }
