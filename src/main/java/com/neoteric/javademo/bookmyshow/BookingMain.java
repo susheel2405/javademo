@@ -1,5 +1,7 @@
 package com.neoteric.javademo.bookmyshow;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class BookingMain {
@@ -33,13 +35,32 @@ public class BookingMain {
             return;
         }
 
+        List<Movies> movies = new ArrayList<>();
+        movies.add(new Movies("Avatar-2", "10:00 AM"));
+        movies.add(new Movies("MAD 2", "1:00 PM"));
+        movies.add(new Movies("Interstellar", "4:30 PM"));
+        movies.add(new Movies("Inception", "7:30 PM"));
+        movies.add(new Movies("Conjuring-2", "12:00 AM"));
+
+        System.out.println("Available Movies");
+
+        for (int i = 0; i<movies.size(); i++){
+            System.out.println((i+1) + "_" + movies.get(i)) ;
+        }
+
+        System.out.println("Select Movie (1-" + movies.size() + "):");
+        int movieChoice = sc.nextInt();
+        Movies selectMovie = movies.get(movieChoice-1);
+
         System.out.println("Choose Payment Method:");
         System.out.println("1. Net Banking");
         System.out.println("2. Card Payment");
         System.out.println("3. UPI");
+        System.out.println("4. Foreign Credit Card");
         int paymentChoice = sc.nextInt();
 
         PaymentMethod payment;
+        ForeignCardPayment foreignCard = null;
 
         if (paymentChoice == 1) {
             payment = new NetBanking();
@@ -49,6 +70,9 @@ public class BookingMain {
             payment.chooseBank();
         } else if (paymentChoice == 3) {
             payment = new UPIPayment(); // No bank selection needed
+        } else if (paymentChoice == 4) {
+            foreignCard = new ForeignCardPayment();
+            payment = foreignCard;
         } else {
             System.out.println("Invalid payment method.");
             return;
@@ -62,12 +86,17 @@ public class BookingMain {
         System.out.println("\n===== BOOKING SUMMARY =====");
         System.out.println("Seat Number: " + seatNumber);
         System.out.println("State: " + state.toUpperCase());
+
+
         booking.printBrakdown();
-        System.out.printf("Payment Method Charges:    " +
-                " ₹%.2f\n",
-                extraCharges);
-        System.out.printf("Final Amount to Pay:     " +
-                "   ₹%.2f\n",
-                finalAmount);
+        System.out.printf("Payment Method Charges:    " + " ₹%.2f\n", extraCharges);
+        System.out.printf("Final Amount to Pay:     " + "   ₹%.2f\n", finalAmount);
+
+        if (foreignCard != null) {
+            double usdAmount = foreignCard.convertUSD(finalAmount);
+            System.out.printf("Amount in USD: $%.2f\n", usdAmount);
+        }
+
+
     }
 }

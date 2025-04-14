@@ -1,5 +1,5 @@
-package com.neoteric.javademo.abstractandinterface1;
-
-public class MallBilling {
-
-}
+//package com.neoteric.javademo.abstractandinterface1;
+//
+//public class MallBilling {
+//
+//}
