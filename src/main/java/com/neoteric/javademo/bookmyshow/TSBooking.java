@@ -3,6 +3,9 @@ package com.neoteric.javademo.bookmyshow;
 public class TSBooking extends TicketBooking {
 
 
+    // Conrete methods
+
+
     // calculating the tax
     public TSBooking(double basePrice) {
         super(basePrice);

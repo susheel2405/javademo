@@ -8,8 +8,8 @@ import java.util.UUID;
 public class BookingMain {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);     // object created and
-        double basePrice = 200.0;
+        Scanner sc = new Scanner(System.in);     // object created and for reading user ainput
+        double basePrice = 200.0;     // Base Ticket price for all bookings
 
         // User Input for seat number and state
         System.out.print("Enter Seat Number to Book: ");
@@ -18,7 +18,7 @@ public class BookingMain {
         System.out.print("Enter your state (TS/AP/MP/KA): ");
         String state = sc.next();
 
-        // Booking object Creation Based on the State
+        // Based on the State, assign appropriate TicketBooking subclass
         TicketBooking booking;
 
         if (state.equalsIgnoreCase("TS")) {
@@ -35,10 +35,10 @@ public class BookingMain {
             booking = new KABooking(basePrice);
         } else {
             System.out.println("Invalid state entered.");
-            return;
+            return;    // exit if invalid state
         }
 
-        // List of the movies and selection with ratings
+        // List of the movies and with ratings
         List<Movies> movies = new ArrayList<>();
         movies.add(new Movies("Avatar-2", "10:00 AM", 4.0));
         movies.add(new Movies("MAD 2", "1:00 PM", 4.5));
@@ -46,17 +46,20 @@ public class BookingMain {
         movies.add(new Movies("Inception", "7:30 PM", 4.9));
         movies.add(new Movies("Conjuring-2", "12:00 AM", 4.8));
 
+
+        // Display Mobies
         System.out.println("Available Movies:");
 
         for (int i = 0; i < movies.size(); i++) {
             System.out.println((i + 1) + "_" + movies.get(i));
         }
 
+        // Ask user to select a movie
         System.out.println("Select Movie (1-" + movies.size() + "):");
-        int movieChoice = sc.nextInt();
+        int movieChoice = sc.nextInt();   // Get user movie choice
 
-        // Get the selected movie
-        Movies selectedMovie = movies.get(movieChoice - 1);
+
+        Movies selectedMovie = movies.get(movieChoice - 1);     // Get movie object
 
         // Display selected Movie info
         System.out.println("\n===== Movie Details =====");
@@ -72,12 +75,15 @@ public class BookingMain {
         System.out.println("2. Card Payment");
         System.out.println("3. UPI");
         System.out.println("4. Foreign Credit Card");
-        int paymentChoice = sc.nextInt();
+        int paymentChoice = sc.nextInt();    // Proceeds to next line
 
+
+        // Generate Order and Merchant IDs
         String orderId = UUID.randomUUID().toString();
         String merchantId = UUID.randomUUID().toString();
         ForeignCardPayment foreignCard = null;
 
+        // Choose Payment Methods
         if (paymentChoice == 1) {
             payment = new NetBanking();
             payment.chooseBank();
@@ -87,47 +93,54 @@ public class BookingMain {
         } else if (paymentChoice == 3) {
             payment = new UPIPayment(); // No bank selection needed
         } else if (paymentChoice == 4) {
-            foreignCard = new ForeignCardPayment();
+            foreignCard = new ForeignCardPayment();   // Special handiling for USD
             payment = foreignCard;
         } else {
             System.out.println("Invalid payment method.");
             return;
         }
 
-        // Total Payment Calculation
-        double totalBeforePayment = booking.calculateTotalPrice();
-        double extraCharges = payment.applyCharges(totalBeforePayment, orderId, merchantId);
+        // Total Payment and Charges Calculation
+        double totalBeforePayment = booking.calculateTotalPrice(); // Total amount before TAX
+
+        double extraCharges = payment.applyCharges(totalBeforePayment, orderId, merchantId);  // Application of charges
         double finalAmount = totalBeforePayment + extraCharges;
 
-        // Output Summary
+        // Booking Output Summary
         System.out.println("\n===== BOOKING SUMMARY =====");
         System.out.println("Seat Number: " + seatNumber);
-        System.out.println("State: " + state.toUpperCase());
+        System.out.println("State: " + state.toUpperCase());   // state selection and seat selection
 
-        booking.printBrakdown();
+        booking.printBrakdown();      // Print Base, Tax, service charge breakdown
+
         System.out.printf("Payment Method Charges: ₹%.2f\n", extraCharges);
-        System.out.printf("Final Amount to Pay: ₹%.2f\n", finalAmount);
+        System.out.printf("Final Amount to Pay: ₹%.2f\n", finalAmount);     // Total amount after taxes to be paid
 
         // Conversion to USD for Foreign Card Payment
         if (foreignCard != null) {
             double usdAmount = foreignCard.convertUSD(finalAmount);
-            System.out.printf("Amount in USD: $%.2f\n", usdAmount);
+            System.out.printf("Amount in USD: $%.2f\n", usdAmount);   // amount wiil be displayed in dollars
         }
 
-        // Payment Details
+        // Payment Details and genertaes orderID, MerchatID
         System.out.println("\n===== PAYMENT DETAILS =====");
         System.out.println("Order ID: " + orderId);
         System.out.println("Merchant ID: " + merchantId);
+
+
+        // Refund process logic
+        System.out.print("\nDo you want to initiate a refund? (yes/no): ");
+        String refundChoice = sc.next();
+        if (refundChoice.equalsIgnoreCase("yes")) {
+            RefundService refundService = new RefundService();
+            refundService.processRefund(payment, orderId, finalAmount, merchantId);
+        } else {
+            System.out.println("Booking completed successfully!");
+        }
+
+
     }
 
-//     refund Process
-//        System.out.print("\nDo you want to initiate a refund? (yes/no): ");
-//        String refundChoice = sc.next();
-//        if (refundChoice.equalsIgnoreCase("yes")) {
-//            payment.refund(orderId, finalAmount, merchantId);
-//        } else {
-//            System.out.println("Booking completed successfully!");
-//        }
 
 
 }
