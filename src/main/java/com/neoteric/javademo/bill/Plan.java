@@ -2,7 +2,7 @@ package com.neoteric.javademo.bill;
 
 public abstract class Plan {
 
-    int rate;
+    double rate;
 
 
 
@@ -14,7 +14,7 @@ public abstract class Plan {
 
     public void calculateBill(int calculateBill){
 
-        System.out.println("Bill Amount: " + (getRate() + calculateBill));
+        System.out.println("Bill amount for " + getClass().getSimpleName() + ": " + (getRate() * calculateBill));
 
     }
 

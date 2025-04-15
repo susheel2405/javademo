@@ -12,6 +12,6 @@ public class InstitutionalPlan extends Plan{
     }
 
     public void calculateBill(int units) {
-        System.out.println("Bill amount for Domestic: " + (getRate() * units));
+        System.out.println("Bill amount for " + getClass().getSimpleName() + ": " + (getRate() * units));
     }
 }
