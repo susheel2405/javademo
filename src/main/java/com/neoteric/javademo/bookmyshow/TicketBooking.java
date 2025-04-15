@@ -1,25 +1,24 @@
 package com.neoteric.javademo.bookmyshow;
 
 public abstract class TicketBooking {
+    protected double basePrice;
 
-    protected double baseprice = 200;
-    protected double serviceCharge = 50;
-
-    public TicketBooking(double baseprice){
-        this.baseprice = baseprice;
+    public TicketBooking(double basePrice) {
+        this.basePrice = basePrice;
     }
 
-    public abstract double calculateTax();
-
-    public double calculateTotalPrice(){
-        return baseprice + serviceCharge + calculateTax();
+    public final double calculateTotalPrice() {
+        double tax = calculateTax(basePrice);
+        double serviceCharge = addServiceCharge(basePrice);
+        return basePrice + tax + serviceCharge;
     }
 
-    public void printBrakdown(){
-        System.out.printf("Base Price:  ₹%.2f\\n", baseprice);
-        System.out.printf("Service Charge:  ₹%.2f\\n", serviceCharge);
-        System.out.printf("State Tax:  ₹%.2f\\n", calculateTax());
-        System.out.printf("Total Before Payment Charges:  ₹%.2f\\n", calculateTotalPrice());
+    protected abstract double calculateTax(double price);
+    protected abstract double addServiceCharge(double price);
 
+    public void printBrakdown() {
+        System.out.printf("Base Price:               ₹%.2f\n", basePrice);
+        System.out.printf("Tax:                      ₹%.2f\n", calculateTax(basePrice));
+        System.out.printf("Service Charge:           ₹%.2f\n", addServiceCharge(basePrice));
     }
 }

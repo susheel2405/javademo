@@ -2,16 +2,18 @@ package com.neoteric.javademo.bookmyshow;
 
 public class KABooking extends TicketBooking{
 
-
-    // calculating the tax
-    public KABooking(double basePrice){
+    public KABooking(double basePrice) {
         super(basePrice);
     }
 
+
     @Override
-    public double calculateTax() {
-        return baseprice * 0.09;
+    protected double calculateTax(double price) {
+        return price * 0.15;
     }
 
-
+    @Override
+    protected double addServiceCharge(double price) {
+        return price * 0.06;
+    }
 }

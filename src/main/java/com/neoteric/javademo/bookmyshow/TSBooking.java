@@ -1,17 +1,21 @@
 package com.neoteric.javademo.bookmyshow;
 
-public class TSBooking extends TicketBooking{
+public class TSBooking extends TicketBooking {
 
 
     // calculating the tax
-    public TSBooking(double basePrice){
+    public TSBooking(double basePrice) {
         super(basePrice);
     }
 
     @Override
-    public double calculateTax() {
-        return baseprice * 0.10;
+    protected double calculateTax(double price) {
+        return price * 0.12;
     }
 
-
+    @Override
+    protected double addServiceCharge(double price) {
+        return price * 0.05;
+    }
 }
+

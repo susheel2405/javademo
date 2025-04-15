@@ -2,14 +2,18 @@ package com.neoteric.javademo.bookmyshow;
 
 public class APBooking extends TicketBooking{
 
-
-    // calculating the tax
-    public APBooking(double basePrice){
+    public APBooking(double basePrice) {
         super(basePrice);
     }
 
+
     @Override
-    public double calculateTax() {
-        return baseprice * 0.12;
+    protected double calculateTax(double price) {
+        return price * 0.14;
+    }
+
+    @Override
+    protected double addServiceCharge(double price) {
+        return price * 0.09;
     }
 }

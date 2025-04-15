@@ -4,23 +4,32 @@ public class Movies {
 
     private String name;
     private String timing;
+    private double rating;
 
-
-    public Movies(String name, String timing){
+    public Movies(String name, String timing, double rating) {
         this.name = name;
         this.timing = timing;
+        this.rating = rating;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public String getTiming(){
-        return  timing;
+    public String getTiming() {
+        return timing;
     }
 
-    public String toString(){
-        return name + "at" + timing;
+    public double getRating() {
+        return rating;
     }
 
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return name + " at " + timing + " | Rating: " + rating + " / 5";
+    }
 }
